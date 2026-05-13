@@ -1,0 +1,46 @@
+name: Sistema-Hotelero
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-sistema_hotelero}
+      POSTGRES_USER: ${POSTGRES_USER:-sistema_hotelero_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sistema_hotelero_password}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U ${POSTGRES_USER:-sistema_hotelero_user} -d ${POSTGRES_DB:-sistema_hotelero}
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  liquibase:
+    build:
+      context: .
+      dockerfile: docker/liquibase/Dockerfile
+    image: sistema-hotelero-liquibase:5.0.2
+    profiles:
+      - tooling
+    depends_on:
+      postgres:
+        condition: service_healthy
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
+    entrypoint:
+      - liquibase
+      - --search-path=/workspace
+      - --changeLogFile=changelog-master.yaml
+      - --classpath=/liquibase/liquibase_libs/postgresql-42.7.8.jar
+      - --url=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-sistema_hotelero}
+      - --username=${POSTGRES_USER:-sistema_hotelero_user}
+      - --password=${POSTGRES_PASSWORD:-sistema_hotelero_password}
+      - update
+
+volumes:
+  postgres_data:
