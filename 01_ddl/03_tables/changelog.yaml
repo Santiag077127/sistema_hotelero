@@ -93,3 +93,22 @@ databaseChangeLog:
       rollback:
         - sqlFile:
             path: 05_rollback/01_ddl/03_tables/05_create_service_delivery_domain_tables.sql
+
+  - changeSet:
+      id: 06_create_billing_domain_tables
+      author: Santiago
+      context: dev
+      labels: HU-11
+      comment: Create billing domain tables
+      changes:
+        - tagDatabase:
+            tag: v1.0.6
+
+        - sqlFile:
+            path: 01_ddl/03_tables/06_create_billing_domain_tables.sql
+            endDelimiter: ";"
+            stripComments: false
+
+      rollback:
+        - sqlFile:
+            path: 05_rollback/01_ddl/03_tables/06_create_billing_domain_tables.sql
