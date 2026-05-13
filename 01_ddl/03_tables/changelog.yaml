@@ -17,3 +17,22 @@ databaseChangeLog:
       rollback:
         - sqlFile:
             path: 05_rollback/01_ddl/03_tables/01_create_security_domain_tables.sql
+
+  - changeSet:
+      id: 02-create-parameterization-domain
+      author: mrtinez.stiven@gmail.com
+      context: dev
+      labels: HU-07
+      comment: Create parameterization domain tables
+      changes:
+        - tagDatabase:
+            tag: v1.0.2
+
+        - sqlFile:
+            path: 01_ddl/03_tables/02_create_parameterization_domain_tables.sql
+            endDelimiter: ";"
+            stripComments: false
+
+      rollback:
+        - sqlFile:
+            path: 05_rollback/01_ddl/03_tables/02_create_parameterization_domain_tables.sql
