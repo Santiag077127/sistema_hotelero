@@ -55,3 +55,22 @@ databaseChangeLog:
       rollback:
         - sqlFile:
             path: 05_rollback/01_ddl/03_tables/03_create_distribution_domain_tables.sql
+
+  - changeSet:
+      id: 04_create_inventory_domain_tables
+      author: EmersonMolano
+      context: dev
+      labels: HU-09
+      comment: Create inventory domain tables
+      changes:
+        - tagDatabase:
+            tag: v1.0.4
+
+        - sqlFile:
+            path: 01_ddl/03_tables/04_create_inventory_domain_tables.sql
+            endDelimiter: ";"
+            stripComments: false
+
+      rollback:
+        - sqlFile:
+            path: 05_rollback/01_ddl/03_tables/04_create_inventory_domain_tables.sql
