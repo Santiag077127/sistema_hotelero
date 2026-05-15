@@ -112,3 +112,23 @@ databaseChangeLog:
       rollback:
         - sqlFile:
             path: 05_rollback/01_ddl/03_tables/06_create_billing_domain_tables.sql
+
+  - changeSet:
+      id: HU-10-create-notification-domain-tables
+      author: santiago
+      context: dev
+      labels: HU-10-dev
+      comment: Create notification domain tables
+
+      changes:
+        - tagDatabase:
+            tag: v1.0.3
+
+        - sqlFile:
+            path: 01_ddl/03_tables/07_create_notificacion_domain_tables.sql
+            endDelimiter: ";"
+            stripComments: false
+
+      rollback:
+        - sqlFile:
+            path: 05_rollback/01_ddl/03_tables/07_create_notificacion_domain_tables.sql
