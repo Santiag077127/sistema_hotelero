@@ -131,3 +131,23 @@ databaseChangeLog:
       rollback:
         - sqlFile:
             path: 05_rollback/01_ddl/03_tables/07_create_notificacion_domain_tables.sql
+            
+  - changeSet:
+      id: HU-11-create-maintenance-domain-tables
+      author: santiago
+      context: dev
+      labels: HU-11-dev
+      comment: Create maintenance domain tables
+
+      changes:
+        - tagDatabase:
+            tag: v1.0.3
+
+        - sqlFile:
+            path: 01_ddl/03_tables/08_create_maintenance_domain_tables.sql
+            endDelimiter: ";"
+            stripComments: false
+
+      rollback:
+        - sqlFile:
+            path: 05_rollback/01_ddl/03_tables/08_create_maintenance_domain_tables.sql
